@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <style> 
+      .tableNameHeading { 
+           margin-top:2em; 
+           margin-bottom:1em; 
+           border-top: 2px solid gray; 
+           border-bottom: 1px solid #C0C0C0; 
+           background-color:#F5F5FF; 
+       } 
+
+      .tableComment{ background-color:#e4efff; margin-bottom:20px;} 
+      .tableDefinition { padding:2px; border-collapse:collapse; margin-top:1em;} 
+
+      .tdTableDefinition { 
+        padding-right:10px; 
+        vertical-align:top; 
+        border-bottom:1px solid #C0C0C0; 
+      } 
+
+      .tdTableHeading { 
+        padding:2px; 
+        font-weight:bold; 
+        vertical-align:top; 
+        border-bottom: 1px solid #C0C0C0; 
+        background-color: #d0dfff; 
+      } 
+      
+      .subTitle { 
+        font-size:115%; 
+        font-variant:small-caps; 
+        font-weight:bold; 
+      } 
+    </style>
+        <title>job-notificador - Data Model</title>
+    </head>
+    <body>
+        <center>
+            <h2>job-notificador - Data Model</h2>
+        </center>
+        <h3>List of tables</h3>
+        <ul>
+            <li>
+                <a href="#TASK">TASK</a>
+            </li>
+            <li>
+                <a href="#TASK_TYPE">TASK_TYPE</a>
+            </li>
+        </ul>
+        <div class="tableNameHeading">
+            <a style="font-size:175%; font-weight:bold; font-family: monospace;" name="TASK">TASK</a>
+            <p></p>
+        </div>
+        <table class="tableDefinition">
+            <tr>
+                <td class="tdTableHeading" width="15%">Column</td><td class="tdTableHeading" width="12%">Type</td><td class="tdTableHeading" width="3%">PK</td><td class="tdTableHeading" width="5%">Nullable</td><td class="tdTableHeading">Comment</td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">UUID</td><td class="tdTableDefinition" nowrap>uuid</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">TASK_TYPE_NAME</td><td class="tdTableDefinition" nowrap>CHAR(40)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">INPUT</td><td class="tdTableDefinition" nowrap>JSONB</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">OUTPUT</td><td class="tdTableDefinition" nowrap>JSONB</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">HISTORY</td><td class="tdTableDefinition" nowrap>JSONB</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">START_TIME</td><td class="tdTableDefinition" nowrap>TIMESTAMP</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">END_TIME</td><td class="tdTableDefinition" nowrap>TIMESTAMP</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">ERROR</td><td class="tdTableDefinition" nowrap>VARCHAR(220)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">FINISH</td><td class="tdTableDefinition" nowrap>CHAR(1)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">CREATED_TIME</td><td class="tdTableDefinition" nowrap>TIMESTAMP</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition"></td>
+            </tr>
+        </table>
+        <div class="tableNameHeading">
+            <a style="font-size:175%; font-weight:bold; font-family: monospace;" name="TASK_TYPE">TASK_TYPE</a>
+            <p></p>
+        </div>
+        <table class="tableDefinition">
+            <tr>
+                <td class="tdTableHeading" width="15%">Column</td><td class="tdTableHeading" width="12%">Type</td><td class="tdTableHeading" width="3%">PK</td><td class="tdTableHeading" width="5%">Nullable</td><td class="tdTableHeading">Comment</td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">NAME</td><td class="tdTableDefinition" nowrap>CHAR(40)</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">DESCRIPTION</td><td class="tdTableDefinition" nowrap>VARCHAR(220)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">INPUT_SCHEMA</td><td class="tdTableDefinition" nowrap>JSONB</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition"></td>
+            </tr>
+            <tr>
+                <td class="tdTableDefinition">OUTPUT_SCHEMA</td><td class="tdTableDefinition" nowrap>JSONB</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition"></td>
+            </tr>
+        </table>
+        <p class="subTitle">References</p>
+        <ul>
+            <li>
+                <a href="#TASK">TASK</a>
+            </li>
+        </ul>
+    </body>
+</html>
