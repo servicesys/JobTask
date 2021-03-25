@@ -1,59 +1,58 @@
 package core
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
 )
 
 type Runner struct {
-	taskJob TaskJob
+	taskJob     TaskJob
 	taskStorage TaskStorage
 }
 
 func (runner Runner) Run() {
 
-
 	taskTypeName := runner.taskJob.GetTaskTypeName()
-	/*
-	tasks , error :=runner.taskStorage.GetAllTaskNotStartedByType(taskTypeName)
-	if error !=nil {
+	fmt.Println("Runner  + ..............", taskTypeName)
+	fmt.Println(time.Now())
 
+	tasks, error := runner.taskStorage.GetAllTaskNotStartedByType(taskTypeName)
+	if error != nil {
 		fmt.Println(error)
 		//register error storage/
-        return
+		return
 	}
 
-	for  _, task:= range  tasks {
-
-		fmt.Println(task)
+	for _, task := range tasks {
+		fmt.Println("..............")
+		fmt.Println(task.TaskType.Name)
 		task.StartTime = time.Now()
-		//input := task.Input
-		input := make(map[string]interface{})
-		input["RUN"] = "RUNNER"
-		output, error := runner.taskJob.Execute(input)
-		fmt.Println(error)
-		fmt.Println(time.Now())
-		fmt.Println(output)
+		var input map[string]interface{}
+		errJsonUnmarshal := json.Unmarshal(task.Input, &input)
+		if errJsonUnmarshal != nil {
+			task.Error = errJsonUnmarshal.Error()
+			//register error history
+		} else {
+			output, errorExecute := runner.taskJob.Execute(input)
+			if errorExecute != nil {
+				task.Error = errorExecute.Error()
+			} else {
 
-		if error!=nil{
-			task.Error = error.Error()
-		}else {
-			task.Output = output
+				outputByte, errorJsonMarshal := json.Marshal(output)
+				if errorJsonMarshal != nil {
+					task.Error = errorJsonMarshal.Error()
+				} else {
+					task.Output = outputByte
+				}
+			}
+
 		}
+
 		task.EndTime = time.Now()
 		task.Finish = "S"
-		runner.taskStorage.Update(task)
+		runner.taskStorage.UpdateTask(task)
+		fmt.Println("..............")
+
 	}
-*/
-	fmt.Println("Runner  + .............." , taskTypeName)
-	//Execute(input map[string]interface{}) (map[string]interface{}, error)
-	input := make(map[string]interface{})
-	input["RUN"] = "RUNNER"
-	output, error := runner.taskJob.Execute(input)
-	fmt.Println(error)
-	fmt.Println(time.Now())
-	fmt.Println(output)
-	fmt.Println("..............")
 }
-
-
