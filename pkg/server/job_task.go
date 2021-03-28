@@ -1,7 +1,6 @@
-package core
+package server
 
-type TaskJob interface {
-
+type JobTask interface {
 	Execute(input map[string]interface{}) (map[string]interface{}, error)
 	GetTaskTypeName() string
 }

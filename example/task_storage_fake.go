@@ -1,7 +1,7 @@
 package example
 
 import (
-	"JobTask/pkg/core"
+	"JobTask/pkg/server"
 	"errors"
 	"fmt"
 	"time"
@@ -10,9 +10,9 @@ import (
 type TaskStorageFake struct {
 }
 
-func (t TaskStorageFake) GetAllTaskType() ([]core.TaskType, error) {
+func (t TaskStorageFake) GetAllTaskType() ([]server.TaskType, error) {
 
-	helloTaskType := core.TaskType{
+	helloTaskType := server.TaskType{
 		Name:         "HELLO",
 		Description:  "Hello for users",
 		InputSchema:  nil,
@@ -20,21 +20,21 @@ func (t TaskStorageFake) GetAllTaskType() ([]core.TaskType, error) {
 		CronFrequent: "@every 5s",
 	}
 
-	worldTaskType := core.TaskType{
+	worldTaskType := server.TaskType{
 		Name:         "WORLD",
 		Description:  "World for users",
 		InputSchema:  nil,
 		OutputSchema: nil,
-		CronFrequent: "@every 25s",
+		CronFrequent: "@every 15s",
 	}
 
-	listTaskTypes := []core.TaskType{helloTaskType, worldTaskType}
+	listTaskTypes := []server.TaskType{helloTaskType, worldTaskType} //helloTaskType,
 
 	return listTaskTypes, nil
 
 }
 
-func (t TaskStorageFake) GetAllTaskNotStartedByType(name string) ([]core.Task, error) {
+func (t TaskStorageFake) GetAllTaskNotStartedByType(name string) ([]server.Task, error) {
 
 	if name == "HELLO" {
 		return getHelloTasks(), nil
@@ -47,11 +47,15 @@ func (t TaskStorageFake) GetAllTaskNotStartedByType(name string) ([]core.Task, e
 	return nil, errors.New("FAIL " + name)
 }
 
-func (t TaskStorageFake) UpdateTask(task core.Task) error {
+func (t TaskStorageFake) UpdateTask(task server.Task) error {
 
 	fmt.Println("//UPDATE:" + task.TaskType.Name)
 	fmt.Println(task.StartTime, task.EndTime, task.Finish)
+	fmt.Println("INPUT:")
+	fmt.Println(string(task.Input))
+	fmt.Println("OUTPUT:")
 	fmt.Println(string(task.Output))
+	fmt.Println("ERROR:")
 	fmt.Println(task.Error)
 	fmt.Println("//UPDATE:" + task.TaskType.Name)
 
@@ -59,75 +63,109 @@ func (t TaskStorageFake) UpdateTask(task core.Task) error {
 
 }
 
-func getHelloTasks() []core.Task {
+func getHelloTasks() []server.Task {
 
-	textoJSon := `
- { "titulo" : " Hello world task job input" , "texto" :  "HELLO"
-		 } ;`
+	textoJSon := ` { "title" : " Hello world task job input" , "text" :  "HELLO"} `
 
 	input := []byte(textoJSon)
 
-	listHelloTask := make([]core.Task, 5)
+	listHelloTask := make([]server.Task, 2)
 
-	for i := 0; i < 5; i++ {
+	for i := 0; i < 2; i++ {
 
-		listHelloTask = append(listHelloTask, core.Task{
+		listHelloTask[i] = server.Task{
 			Uuid: "hello" + string(i),
-			TaskType: core.TaskType{
+			TaskType: server.TaskType{
 				Name:         "HELLO",
 				Description:  "",
 				InputSchema:  nil,
 				OutputSchema: nil,
 				CronFrequent: "",
-				TaskJobRef:   nil,
+				JobTaskRef:   nil,
 			},
 			Input:       input,
 			Output:      nil,
 			History:     nil,
 			StartTime:   time.Time{},
 			EndTime:     time.Time{},
-			Error:       "",
+			Error:       nil,
 			Finish:      "",
 			CreatedTime: time.Time{},
-		})
+		}
 
 	}
-
+	fmt.Println(len(listHelloTask))
 	return listHelloTask
 
 }
 
-func getWorldTasks() []core.Task {
+func getSchema() []byte {
 
-	textoJSon := `
- { "titulo" : " World task job input" , "texto" :  "WORLD"
-		 } `
+	SCHEMA := `{
+     "$id": "https://qri.io/schema/",
+    "$comment" : "sample comment",
+    "title": "Texto Blog",
+    "type": "object",
+	"properties": {
+		"title": {
+
+			"title": "Titulo",
+			"type": "string",
+			"default": "",
+			"examples": [
+				"Este e um texto de exemplo"
+			],
+			"pattern": "^.*$"
+		},
+		"text": {
+
+			"title": "Texto",
+			"type": "string",
+			"default": "",
+			"examples": [
+				"<p>Este e  o corpot do texto texto de exemplo</p>"
+			],
+			"pattern": "^.*$"
+		}
+	},
+	"required": [
+		"title",
+		"text"
+	]
+}
+`
+	return []byte(SCHEMA)
+}
+
+func getWorldTasks() []server.Task {
+
+	textoJSon := `{ "title" : " World task job input" , "text" :  "WORLD"}`
 
 	input := []byte(textoJSon)
 
-	listHelloTask := make([]core.Task, 5)
+	listHelloTask := make([]server.Task, 2)
 
 	for i := 0; i < 2; i++ {
 
-		listHelloTask = append(listHelloTask, core.Task{
+		listHelloTask[i] = server.Task{
 			Uuid: "world" + string(i),
-			TaskType: core.TaskType{
+			TaskType: server.TaskType{
 				Name:         "WORLD",
 				Description:  "",
-				InputSchema:  nil,
-				OutputSchema: nil,
+				InputSchema:  getSchema(),
+				OutputSchema: getSchema(),
 				CronFrequent: "",
-				TaskJobRef:   nil,
+				JobTaskRef:   nil,
 			},
 			Input:       input,
 			Output:      nil,
 			History:     nil,
 			StartTime:   time.Time{},
 			EndTime:     time.Time{},
-			Error:       "",
+			Error:       nil,
 			Finish:      "",
 			CreatedTime: time.Time{},
-		})
+		}
 
 	}
 
