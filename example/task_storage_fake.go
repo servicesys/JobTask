@@ -47,7 +47,7 @@ func (t TaskStorageFake) GetAllTaskNotStartedByType(name string) ([]server.Task,
 	return nil, errors.New("FAIL " + name)
 }
 
-func (t TaskStorageFake) UpdateTask(task server.Task) error {
+func (t TaskStorageFake) SaveTask(task server.Task) error {
 
 	fmt.Println("//UPDATE:" + task.TaskType.Name)
 	fmt.Println(task.StartTime, task.EndTime, task.Finish)

@@ -15,7 +15,7 @@ func (taskJobHello TaskJobHello) Execute(input map[string]interface{}) (map[stri
 	fmt.Println("TASK HELLO..............")
 	fmt.Println(time.Now())
 	fmt.Println("..............")
-	return output, nil
+	return output, nil //errors.New("PROCESSAMENTO INCORRETO:" + time.Now().String() )
 }
 
 func (taskJobHello TaskJobHello) GetTaskTypeName() string {

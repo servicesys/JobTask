@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"encoding/json"
 	"go.uber.org/zap"
 	"time"
@@ -14,9 +15,10 @@ type Runner struct {
 
 func (runner Runner) Run() {
 
+	ctx := context.TODO()
 	taskTypeName := runner.jobTask.GetTaskTypeName()
 	runner.logger.Debug("START RUN", zap.String("TaskType", taskTypeName))
-	tasks, error := runner.taskStorage.GetAllTaskNotStartedByType(taskTypeName)
+	tasks, error := runner.taskStorage.GetAllTaskNotStartedByType(ctx , taskTypeName)
 	if error != nil {
 		runner.logger.Error("ERROR", zap.Error(error))
 		panic(error)
