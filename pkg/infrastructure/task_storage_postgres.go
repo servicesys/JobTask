@@ -1,11 +1,12 @@
 package infrastructure
 
 import (
-	"JobTask/pkg/server"
+
 	"context"
 	"database/sql"
 	"errors"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/servicesys/JobTask/pkg/server"
 	"strings"
 )
 

@@ -1,4 +1,4 @@
-module JobTask
+module github.com/servicesys/JobTask
 
 go 1.15
 

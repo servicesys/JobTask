@@ -1,9 +1,9 @@
 package example
 
 import (
-	"JobTask/pkg/server"
 	"errors"
 	"fmt"
+	"github.com/servicesys/JobTask/pkg/server"
 	"time"
 )
 
