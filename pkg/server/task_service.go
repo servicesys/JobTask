@@ -56,7 +56,7 @@ func (taskService *TaskService) RegisterTaskJob(jobTask JobTask) {
 func (taskService *TaskService) Start() {
 
 	taskService.logger.Info("TaskService:Start")
-	jobrunner.Start()
+	jobrunner.Start(2)
 
 	for _, taskType := range taskService.taskTypes {
 

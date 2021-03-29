@@ -22,6 +22,7 @@ func (runner Runner) Run() {
 		panic(error)
 		return
 	}
+	runner.logger.Debug("TASKS", zap.Int("len", len(tasks)))
 	for _, task := range tasks {
 		runner.logger.Debug("EXECUTE RUN",
 			zap.String("TaskType", taskTypeName),
@@ -43,7 +44,7 @@ func (runner Runner) Run() {
 		}
 		task.EndTime = time.Now()
 		task.Finish = "S"
-		runner.taskStorage.UpdateTask(task)
+		runner.taskStorage.SaveTask(task)
 		var errorStr string = ""
 		if task.Error != nil {
 			errorStr = task.Error.Error()

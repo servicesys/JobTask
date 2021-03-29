@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/qri-io/jsonschema"
+	"strings"
 	"time"
 )
 
@@ -25,7 +26,7 @@ func (task Task) ValidateInput() error {
 
 	valid, listErros := task.Validator(context.Background(), task.TaskType.InputSchema, task.Input)
 	if !valid {
-		return errors.New(listErros[0])
+		return errors.New(strings.Join(listErros, "|"))
 	}
 	return nil
 }
