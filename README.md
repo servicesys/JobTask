@@ -11,3 +11,5 @@ https://github.com/bamzi/jobrunner
  - DataBase/POOL - OK
  - JobTask Client - another project - OK 
  - TESTS COMPLETE
+
+- view model -> https://docs.spring.io/spring-batch/docs/current/reference/html/schema-appendix.html
